@@ -8,10 +8,10 @@ const fs = require('fs');
 const path = require('path');
 const zlib = require('zlib');
 
-const NAVY = [11, 17, 32, 255];
-const NAVY2 = [20, 30, 54, 255];
-const GOLD = [200, 168, 78, 255];
-const GOLD_DK = [168, 138, 60, 255];
+const NAVY = [10, 20, 48, 255]; // deep blue bg
+const NAVY2 = [20, 34, 74, 255];
+const GOLD = [226, 55, 68, 255]; // red (spade)
+const GOLD_DK = [255, 255, 255, 255]; // white (frame)
 const TRANSPARENT = [0, 0, 0, 0];
 
 function crc32(buf) {

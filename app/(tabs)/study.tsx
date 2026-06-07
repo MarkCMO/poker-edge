@@ -42,6 +42,12 @@ const TOOLS: Tool[] = [
     body: 'Hand vs hand and hand vs range. Exact enumeration or Monte Carlo, plus flop strategy and AI explain.',
   },
   {
+    href: '/study/odds',
+    icon: 'stats-chart',
+    title: 'Odds & probabilities',
+    body: 'Win % by players to the flop, odds of being dealt AA/KK, and how many hands until a premium.',
+  },
+  {
     href: '/study/import',
     icon: 'cloud-upload',
     title: 'Import hands + find leaks',

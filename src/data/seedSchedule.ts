@@ -90,6 +90,9 @@ export const SEED_TOURNAMENTS: Tournament[] = [
     status: 'completed',
     lastVerified: VERIFIED,
     tentative: false,
+    entrants: 1422,
+    prizePool: 4550000,
+    winnerPrize: 612000,
   },
   {
     id: 't-wpt-venetian-spring',
@@ -108,6 +111,9 @@ export const SEED_TOURNAMENTS: Tournament[] = [
     status: 'completed',
     lastVerified: VERIFIED,
     tentative: false,
+    entrants: 612,
+    prizePool: 2870000,
+    winnerPrize: 489000,
   },
   // ---- WSOP 2026 (mid-run / scheduled) ----
   {

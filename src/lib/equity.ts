@@ -252,6 +252,53 @@ function enumerateExact(hero: Card[], villain: Card[], board: Card[]): EquityRes
   return { win, tie, lose, equity, samples, ci95: 0, exact: true };
 }
 
+/**
+ * Multiway equity: hero vs N opponents each holding a random hand. Answers
+ * "with hand X, what are my odds of winning when Y players see the flop?"
+ */
+export function simulateMultiway(
+  hero: Card[],
+  numOpponents: number,
+  board: Card[] = [],
+  iterations = 8000
+): EquityResult {
+  if (hero.length !== 2 || numOpponents < 1) {
+    return { win: 0, tie: 0, lose: 0, equity: 0, samples: 0, ci95: 0, exact: false };
+  }
+  const used = new Set<number>([...hero, ...board].map(cardId));
+  const baseDeck = fullDeck().filter((c) => !used.has(cardId(c)));
+  let win = 0, tie = 0, lose = 0, samples = 0;
+
+  for (let it = 0; it < iterations; it++) {
+    const deck = baseDeck.slice();
+    // deal opponents (2 each) then the remaining board
+    const needBoard = 5 - board.length;
+    const draw = numOpponents * 2 + needBoard;
+    if (draw > deck.length) break;
+    shuffleInPlace(deck, draw);
+    let k = 0;
+    const opps: Card[][] = [];
+    for (let o = 0; o < numOpponents; o++) opps.push([deck[k++], deck[k++]]);
+    const runout = deck.slice(k, k + needBoard);
+    const fullBoard = [...board, ...runout];
+    const heroScore = eval7([...hero, ...fullBoard]);
+    let best = heroScore, ties = 0, beaten = false;
+    for (const o of opps) {
+      const s = eval7([...o, ...fullBoard]);
+      if (s > heroScore) { beaten = true; break; }
+      if (s === heroScore) ties++;
+      if (s > best) best = s;
+    }
+    if (beaten) lose++;
+    else if (ties > 0) tie++;
+    else win++;
+    samples++;
+  }
+  const equity = samples > 0 ? (win + tie / 2) / samples : 0;
+  const ci95 = samples > 0 ? 1.96 * Math.sqrt((equity * (1 - equity)) / samples) : 0;
+  return { win, tie, lose, equity, samples, ci95, exact: false };
+}
+
 // ---- Range expansion ----
 // Parse "AA, AKs, KQo, TT+, ATs+" into concrete 2-card combos.
 

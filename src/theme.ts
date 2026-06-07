@@ -4,21 +4,23 @@
  * Copy rule: direct instructional voice, no en/em dashes, hyphens only.
  */
 
+// Red, white, and blue brand palette.
 export const colors = {
-  bg: '#0B1120', // near-black background
-  surface: '#1E2D45', // slate surface
-  surfaceAlt: '#16223A',
-  accent: '#C8A84E', // gold
-  accentSoft: '#3A3320',
-  text: '#F5F7FA',
-  textDim: '#9AA7BD',
-  textFaint: '#6B7894',
-  border: '#27374F',
-  win: '#3FB477', // green for positive results
-  loss: '#E2574C', // red for negative results
-  warn: '#E8B339',
-  info: '#5B8DEF',
-  overlay: 'rgba(5, 9, 18, 0.78)',
+  bg: '#0A1430', // deep navy blue background
+  surface: '#14224A', // blue slate surface
+  surfaceAlt: '#0F1B3C',
+  accent: '#E23744', // red (primary brand accent)
+  accentSoft: '#3A1A20',
+  blue: '#3B82F6', // bright blue (secondary brand accent)
+  text: '#FFFFFF', // white
+  textDim: '#AEBCD6',
+  textFaint: '#6E7DA0',
+  border: '#26365E',
+  win: '#37C871', // green for positive results
+  loss: '#FF5A63', // red-coral for negative results
+  warn: '#F0B429',
+  info: '#3B82F6', // blue
+  overlay: 'rgba(4, 8, 20, 0.80)',
 } as const;
 
 export const fonts = {

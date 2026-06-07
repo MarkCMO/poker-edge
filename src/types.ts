@@ -204,4 +204,9 @@ export interface Tournament {
   status: 'scheduled' | 'running' | 'completed' | 'cancelled';
   lastVerified: string;
   tentative: boolean;
+  // results (populated for completed events)
+  entrants?: number | null;
+  prizePool?: number | null;
+  winner?: string | null;
+  winnerPrize?: number | null;
 }

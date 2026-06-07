@@ -87,4 +87,8 @@ export interface ApiTournament {
   status: string;
   lastVerified: string;
   tentative: boolean;
+  entrants?: number | null;
+  prizePool?: number | null;
+  winner?: string | null;
+  winnerPrize?: number | null;
 }

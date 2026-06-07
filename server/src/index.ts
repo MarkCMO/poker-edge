@@ -1,4 +1,4 @@
-import type { Env, ApiRoom } from './types';
+import type { Env, ApiRoom, ApiTournament } from './types';
 import { selectAll, isConfigured, upsert } from './db';
 import { rowToRoom, rowToSeries, rowToTournament, roomToRow } from './normalize';
 import { runIngestion } from './adapters';
@@ -168,8 +168,27 @@ export default {
     }
 
     if (url.pathname === '/v1/series') return fromDbOrSeed('series', 'start_date', rowToSeries, BOOTSTRAP_SERIES);
-    if (url.pathname === '/v1/tournaments')
-      return fromDbOrSeed('tournaments', 'start_datetime', rowToTournament, BOOTSTRAP_TOURNAMENTS);
+
+    // Tournaments: serve DB rows (or seed), then overlay completed-event results
+    // (entrants / prize pool / top prize) from the bundled seed by id, so results
+    // show even though the DB schema does not carry those columns.
+    if (url.pathname === '/v1/tournaments') {
+      const resultsById = new Map(
+        BOOTSTRAP_TOURNAMENTS.filter((t) => t.winnerPrize || t.entrants || t.prizePool).map((t) => [
+          t.id,
+          { entrants: t.entrants, prizePool: t.prizePool, winner: t.winner, winnerPrize: t.winnerPrize },
+        ])
+      );
+      let list: ApiTournament[] = BOOTSTRAP_TOURNAMENTS;
+      if (isConfigured(env)) {
+        try {
+          const rows = await selectAll<Record<string, unknown>>(env, 'tournaments', 'select=*&order=start_datetime');
+          if (rows.length) list = rows.map(rowToTournament);
+        } catch { /* keep seed */ }
+      }
+      list = list.map((t) => (resultsById.has(t.id) ? { ...t, ...resultsById.get(t.id) } : t));
+      return json(list);
+    }
 
     // AI explain (Phase 11): explains engine output in plain language.
     if (url.pathname === '/v1/explain' && req.method === 'POST') {

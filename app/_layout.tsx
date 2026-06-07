@@ -93,6 +93,8 @@ export default function RootLayout() {
             headerTintColor: colors.text,
             headerTitleStyle: { fontFamily: 'Barlow_600SemiBold' },
             headerShadowVisible: false,
+            headerBackButtonDisplayMode: 'minimal',
+            headerBackTitle: 'Back',
             contentStyle: { backgroundColor: colors.bg },
           }}
         >
@@ -112,6 +114,7 @@ export default function RootLayout() {
           <Stack.Screen name="study/matrix" options={{ title: 'Player-type guide' }} />
           <Stack.Screen name="study/quiz" options={{ title: 'Trainer' }} />
           <Stack.Screen name="study/equity" options={{ title: 'Equity calculator' }} />
+          <Stack.Screen name="study/odds" options={{ title: 'Odds & probabilities' }} />
           <Stack.Screen name="study/import" options={{ title: 'Import hands' }} />
           <Stack.Screen name="study/drills" options={{ title: 'Drills' }} />
           <Stack.Screen name="study/icm" options={{ title: 'ICM calculator' }} />

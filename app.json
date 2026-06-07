@@ -11,7 +11,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#0B1120"
+      "backgroundColor": "#0A1430"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -30,7 +30,7 @@
       "package": "com.markcmo.pokeredge",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#0B1120"
+        "backgroundColor": "#0A1430"
       },
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
@@ -59,13 +59,13 @@
       [
         "expo-notifications",
         {
-          "color": "#C8A84E"
+          "color": "#E23744"
         }
       ],
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#0B1120",
+          "backgroundColor": "#0A1430",
           "image": "./assets/splash.png",
           "imageWidth": 200
         }

@@ -12,12 +12,14 @@ import {
   Row,
   Pill,
   Stat,
+  Segmented,
   SectionTitle,
   Divider,
 } from '../../src/components/ui';
 import { colors, fonts, spacing, type } from '../../src/theme';
 import { useStore } from '../../src/store/useStore';
-import { listAccounts, accountBalance, totalBankroll } from '../../src/db/bankroll';
+import { listAccounts, accountBalance, totalBankroll, addTxn, createAccount } from '../../src/db/bankroll';
+import type { TxnType } from '../../src/types';
 import { listCompletedSessions } from '../../src/db/sessions';
 import { listPlayers } from '../../src/db/players';
 import { listHands } from '../../src/db/hands';
@@ -33,6 +35,36 @@ export default function ProfileTab() {
   const [accounts, setAccounts] = useState<BankrollAccount[]>([]);
   const [players, setPlayers] = useState<PlayerNote[]>([]);
   const [total, setTotal] = useState(0);
+
+  // bankroll editing
+  const [txnType, setTxnType] = useState<TxnType>('deposit');
+  const [txnAmount, setTxnAmount] = useState('');
+  const [txnNote, setTxnNote] = useState('');
+  const [txnAccountId, setTxnAccountId] = useState<string | null>(null);
+  const [newAcct, setNewAcct] = useState('');
+
+  const saveTxn = () => {
+    const amt = parseFloat(txnAmount);
+    if (!amt || isNaN(amt)) {
+      Alert.alert('Enter an amount', 'Type how much to add, remove, or adjust.');
+      return;
+    }
+    let acct = txnAccountId ?? accounts[0]?.id ?? null;
+    if (!acct) acct = createAccount('Main');
+    const signed = txnType === 'withdrawal' ? -Math.abs(amt) : txnType === 'deposit' ? Math.abs(amt) : amt;
+    addTxn({ accountId: acct, type: txnType, amount: signed, note: txnNote.trim() });
+    setTxnAmount('');
+    setTxnNote('');
+    refresh();
+  };
+
+  const addAccount = () => {
+    if (!newAcct.trim()) return;
+    const id = createAccount(newAcct.trim());
+    setTxnAccountId(id);
+    setNewAcct('');
+    refresh();
+  };
 
   // local editable mirrors for numeric settings
   const [stopLoss, setStopLoss] = useState(s.stopLoss != null ? String(s.stopLoss) : '');
@@ -140,6 +172,47 @@ export default function ProfileTab() {
             <Body>{money(accountBalance(a.id))}</Body>
           </Row>
         ))}
+      </Card>
+
+      <Card>
+        <SectionTitle>Adjust bankroll</SectionTitle>
+        <Segmented
+          value={txnType}
+          onChange={(v) => setTxnType(v as TxnType)}
+          options={[
+            { value: 'deposit', label: 'Deposit' },
+            { value: 'withdrawal', label: 'Withdraw' },
+            { value: 'adjustment', label: 'Adjust' },
+          ]}
+        />
+        {accounts.length > 1 ? (
+          <ChipRow>
+            {accounts.map((a) => (
+              <Chip
+                key={a.id}
+                label={a.name}
+                active={(txnAccountId ?? accounts[0]?.id) === a.id}
+                onPress={() => setTxnAccountId(a.id)}
+              />
+            ))}
+          </ChipRow>
+        ) : null}
+        <Field
+          label={txnType === 'adjustment' ? 'Amount (use minus to reduce)' : 'Amount'}
+          value={txnAmount}
+          onChangeText={setTxnAmount}
+          keyboardType={txnType === 'adjustment' ? 'default' : 'decimal-pad'}
+          placeholder="500"
+        />
+        <Field label="Note (optional)" value={txnNote} onChangeText={setTxnNote} placeholder="Top-up, cash-out, correction..." />
+        <Button title="Save entry" onPress={saveTxn} />
+        <Divider />
+        <Row style={{ gap: spacing.sm }}>
+          <View style={{ flex: 1 }}>
+            <Field label="New account" value={newAcct} onChangeText={setNewAcct} placeholder="Online roll" />
+          </View>
+        </Row>
+        <Button title="Add account" variant="ghost" onPress={addAccount} />
       </Card>
 
       {/* Players */}
