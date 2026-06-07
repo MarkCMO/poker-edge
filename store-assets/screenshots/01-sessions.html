@@ -1,0 +1,49 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-font-smoothing:antialiased; }
+  html,body { width:1290px; height:2796px; }
+  body { background:linear-gradient(160deg,#0B1120,#16223A 60%,#0B1120); font-family:'Barlow',sans-serif; color:#F5F7FA; overflow:hidden; }
+  .cap { padding:120px 90px 50px; text-align:center; }
+  .cap h1 { font-family:'Bebas Neue',sans-serif; font-size:118px; line-height:1.02; letter-spacing:2px; color:#F5F7FA; }
+  .cap h1 b { color:#C8A84E; font-weight:400; }
+  .cap p { font-size:42px; color:#9AA7BD; margin-top:26px; font-weight:500; }
+  .phone { margin:30px auto 0; width:1020px; height:2010px; background:#0B1120;
+    border:14px solid #0a1426; border-radius:90px;
+    box-shadow:0 40px 120px rgba(0,0,0,.6), inset 0 0 0 3px #27374F; padding:64px 54px; position:relative; overflow:hidden; }
+  .nav { display:flex; justify-content:space-between; align-items:center; margin-bottom:34px; }
+  .nav .title { font-family:'Bebas Neue',sans-serif; font-size:64px; letter-spacing:1.5px; }
+  .nav .acc { color:#C8A84E; }
+  .card { background:#1E2D45; border:2px solid #27374F; border-radius:40px; padding:46px; margin-bottom:30px; }
+  .card.gold { border-color:#C8A84E; }
+  .row { display:flex; justify-content:space-between; align-items:center; }
+  .pill { border:2px solid; border-radius:999px; padding:8px 22px; font-size:30px; font-weight:600; text-transform:uppercase; letter-spacing:1px; display:inline-block; }
+  .muted { color:#9AA7BD; font-size:36px; }
+  .big { font-family:'Bebas Neue',sans-serif; letter-spacing:1px; }
+  .stat { flex:1; }
+  .stat .v { font-family:'Bebas Neue',sans-serif; font-size:70px; }
+  .stat .l { color:#9AA7BD; font-size:28px; text-transform:uppercase; letter-spacing:1px; }
+  .btn { background:#C8A84E; color:#0B1120; border-radius:28px; padding:30px; text-align:center; font-weight:700; font-size:40px; }
+  .btn.ghost { background:transparent; border:2px solid #27374F; color:#F5F7FA; }
+  .chips span { display:inline-block; border:2px solid #27374F; background:#16223A; color:#9AA7BD; border-radius:999px; padding:14px 28px; font-size:32px; font-weight:600; margin:0 14px 14px 0; }
+  .chips span.on { background:#C8A84E; color:#0B1120; border-color:#C8A84E; }
+  .grid { display:grid; grid-template-columns:repeat(13,1fr); gap:5px; margin-top:20px; }
+  .grid div { aspect-ratio:1; border-radius:7px; background:#16223A; display:flex; align-items:center; justify-content:center; font-size:17px; color:#6B7894; }
+  .grid div.on { background:#C8A84E; color:#0B1120; font-weight:600; }
+  .banner { background:rgba(232,179,57,.12); border:2px solid #E8B339; color:#E8B339; border-radius:24px; padding:30px; font-size:32px; font-weight:600; }
+</style></head><body>
+  <div class="cap"><h1>Track every <b>session</b></h1><p>Live timer, bankroll, and notes. Fully offline.</p></div>
+  <div class="phone"><div class="nav"><div class="title">Sessions</div></div>
+     <div class="card gold">
+       <div class="row"><span class="pill" style="border-color:#3FB477;color:#3FB477">Live session</span><span class="big" style="font-size:80px">3:42</span></div>
+       <div class="muted" style="margin:20px 0 10px">NLHE 2/5 at Bellagio</div>
+       <div style="text-align:center;padding:30px 0"><div class="big" style="font-size:150px;color:#3FB477">+$640</div><div class="stat l" style="text-align:center">Current result</div></div>
+       <div class="row" style="gap:24px"><div class="btn ghost" style="flex:1">Tag player</div><div class="btn ghost" style="flex:1">Log hand</div></div>
+       <div class="btn" style="margin-top:24px">End session</div>
+     </div>
+     <div class="card"><div class="row"><span class="big" style="font-size:46px">NLHE 5/10</span><span class="big" style="font-size:46px;color:#3FB477">+$1,250</span></div>
+       <div class="row"><span class="muted">May 28 - Wynn</span><span class="muted">6h 10m - +$202/hr</span></div></div>
+     <div class="card"><div class="row"><span class="big" style="font-size:46px">PLO 2/5</span><span class="big" style="font-size:46px;color:#E2574C">-$310</span></div>
+       <div class="row"><span class="muted">May 26 - Aria</span><span class="muted">3h 05m - -$100/hr</span></div></div></div>
+</body></html>

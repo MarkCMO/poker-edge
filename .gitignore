@@ -1,0 +1,47 @@
+# dependencies
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Native
+ios/
+android/
+
+# Metro
+.metro-health-check*
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
+.DS_Store
+*.pem
+
+# local env files - NEVER COMMIT SECRETS
+.env
+.env.*
+!.env.example
+
+# Expo / EAS
+.easignore
+
+# secrets / keys
+*.p8
+*.p12
+*.mobileprovision
+*.keystore
+
+# typescript
+*.tsbuildinfo
+
+# server (cloudflare)
+server/node_modules/
+server/.dev.vars
+server/.wrangler/
+dist-check/

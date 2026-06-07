@@ -1,0 +1,95 @@
+{
+  "expo": {
+    "name": "Poker Edge",
+    "slug": "poker-edge",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "pokeredge",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0B1120"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.markcmo.pokeredge",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Poker Edge uses your location to sort nearby poker rooms and tournaments by distance.",
+        "NSCalendarsUsageDescription": "Poker Edge adds tournaments you save to your calendar.",
+        "NSCalendarsFullAccessUsageDescription": "Poker Edge adds tournaments you save to your calendar.",
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "com.markcmo.pokeredge",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0B1120"
+      },
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.READ_CALENDAR",
+        "android.permission.WRITE_CALENDAR",
+        "android.permission.RECEIVE_BOOT_COMPLETED",
+        "android.permission.SCHEDULE_EXACT_ALARM"
+      ]
+    },
+    "plugins": [
+      "expo-router",
+      "expo-sqlite",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Poker Edge uses your location to sort nearby poker rooms and tournaments by distance."
+        }
+      ],
+      [
+        "expo-calendar",
+        {
+          "calendarPermission": "Poker Edge adds tournaments you save to your calendar."
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#C8A84E"
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#0B1120",
+          "image": "./assets/splash.png",
+          "imageWidth": 200
+        }
+      ],
+      "expo-asset",
+      "expo-font"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "apiBaseUrl": "https://pokeredge-api.marklgabriellijr.workers.dev",
+      "revenueCatIosKey": "appl_fUPOKUDLQvYdmcpFsYyAHkCKcpj",
+      "revenueCatAndroidKey": "",
+      "eas": {
+        "projectId": "b961a6ca-1c7b-4ef1-8042-97bd808843be"
+      }
+    },
+    "owner": "markgabrielli",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    }
+  }
+}

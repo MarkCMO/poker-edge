@@ -1,0 +1,18 @@
+name = "pokeredge-api"
+main = "src/index.ts"
+compatibility_date = "2026-05-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Cron triggers for the ingestion layer (Section 6).
+# Daily refresh of schedule + rooms; verified rows are re-stamped, diffs logged.
+[triggers]
+crons = ["0 9 * * *"]
+
+# Secrets (set with: wrangler secret put NAME) - NEVER commit these.
+#   SUPABASE_URL            - your Supabase project URL
+#   SUPABASE_SERVICE_KEY    - service role key (server-only, never in the app)
+#   OPS_ALERT_EMAIL         - where adapter failures are reported
+#   RESEND_API_KEY          - for ops failure alerts
+
+[vars]
+ENVIRONMENT = "production"

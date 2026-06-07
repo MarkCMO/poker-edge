@@ -1,0 +1,20 @@
+{
+  "name": "pokeredge-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Poker Edge reference-data API and ingestion layer (Cloudflare Worker + Supabase)",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "ingest": "wrangler dev --test-scheduled",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250510.0",
+    "typescript": "~5.9.2",
+    "wrangler": "^4.0.0"
+  },
+  "dependencies": {
+    "esbuild": "^0.24.2"
+  }
+}

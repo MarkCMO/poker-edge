@@ -1,0 +1,50 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-font-smoothing:antialiased; }
+  html,body { width:1290px; height:2796px; }
+  body { background:linear-gradient(160deg,#0B1120,#16223A 60%,#0B1120); font-family:'Barlow',sans-serif; color:#F5F7FA; overflow:hidden; }
+  .cap { padding:120px 90px 50px; text-align:center; }
+  .cap h1 { font-family:'Bebas Neue',sans-serif; font-size:118px; line-height:1.02; letter-spacing:2px; color:#F5F7FA; }
+  .cap h1 b { color:#C8A84E; font-weight:400; }
+  .cap p { font-size:42px; color:#9AA7BD; margin-top:26px; font-weight:500; }
+  .phone { margin:30px auto 0; width:1020px; height:2010px; background:#0B1120;
+    border:14px solid #0a1426; border-radius:90px;
+    box-shadow:0 40px 120px rgba(0,0,0,.6), inset 0 0 0 3px #27374F; padding:64px 54px; position:relative; overflow:hidden; }
+  .nav { display:flex; justify-content:space-between; align-items:center; margin-bottom:34px; }
+  .nav .title { font-family:'Bebas Neue',sans-serif; font-size:64px; letter-spacing:1.5px; }
+  .nav .acc { color:#C8A84E; }
+  .card { background:#1E2D45; border:2px solid #27374F; border-radius:40px; padding:46px; margin-bottom:30px; }
+  .card.gold { border-color:#C8A84E; }
+  .row { display:flex; justify-content:space-between; align-items:center; }
+  .pill { border:2px solid; border-radius:999px; padding:8px 22px; font-size:30px; font-weight:600; text-transform:uppercase; letter-spacing:1px; display:inline-block; }
+  .muted { color:#9AA7BD; font-size:36px; }
+  .big { font-family:'Bebas Neue',sans-serif; letter-spacing:1px; }
+  .stat { flex:1; }
+  .stat .v { font-family:'Bebas Neue',sans-serif; font-size:70px; }
+  .stat .l { color:#9AA7BD; font-size:28px; text-transform:uppercase; letter-spacing:1px; }
+  .btn { background:#C8A84E; color:#0B1120; border-radius:28px; padding:30px; text-align:center; font-weight:700; font-size:40px; }
+  .btn.ghost { background:transparent; border:2px solid #27374F; color:#F5F7FA; }
+  .chips span { display:inline-block; border:2px solid #27374F; background:#16223A; color:#9AA7BD; border-radius:999px; padding:14px 28px; font-size:32px; font-weight:600; margin:0 14px 14px 0; }
+  .chips span.on { background:#C8A84E; color:#0B1120; border-color:#C8A84E; }
+  .grid { display:grid; grid-template-columns:repeat(13,1fr); gap:5px; margin-top:20px; }
+  .grid div { aspect-ratio:1; border-radius:7px; background:#16223A; display:flex; align-items:center; justify-content:center; font-size:17px; color:#6B7894; }
+  .grid div.on { background:#C8A84E; color:#0B1120; font-weight:600; }
+  .banner { background:rgba(232,179,57,.12); border:2px solid #E8B339; color:#E8B339; border-radius:24px; padding:30px; font-size:32px; font-weight:600; }
+</style></head><body>
+  <div class="cap"><h1>Know your <b>real numbers</b></h1><p>Hourly by room, stakes, and time. From your own results.</p></div>
+  <div class="phone"><div class="nav"><div class="title">Analytics</div></div>
+     <div class="card"><div class="big" style="color:#C8A84E;font-size:46px;margin-bottom:20px">Bankroll</div>
+       <svg width="100%" height="300" viewBox="0 0 900 300">
+         <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3FB477" stop-opacity=".3"/><stop offset="1" stop-color="#3FB477" stop-opacity="0"/></linearGradient></defs>
+         <polygon points="20,260 20,210 180,225 340,160 500,175 660,90 840,40 840,260" fill="url(#g)"/>
+         <polyline points="20,210 180,225 340,160 500,175 660,90 840,40" fill="none" stroke="#3FB477" stroke-width="7" stroke-linejoin="round"/>
+         <circle cx="840" cy="40" r="11" fill="#3FB477"/>
+       </svg>
+       <div class="row" style="margin-top:24px"><div class="stat"><div class="v" style="color:#3FB477">+$4,820</div><div class="l">Net</div></div><div class="stat"><div class="v">162</div><div class="l">Hours</div></div><div class="stat"><div class="v" style="color:#3FB477">+$30/hr</div><div class="l">Per hour</div></div></div>
+     </div>
+     <div class="card"><div class="big" style="color:#C8A84E;font-size:46px;margin-bottom:24px">Hourly by room</div>
+       <div style="margin-bottom:24px"><div class="row"><span style="font-size:34px">Wynn</span><span style="font-size:34px;color:#3FB477;font-weight:600">+$38/hr</span></div><div style="height:16px;background:#16223A;border-radius:8px;margin-top:8px"><div style="width:76%;height:16px;border-radius:8px;background:#3FB477"></div></div></div><div style="margin-bottom:24px"><div class="row"><span style="font-size:34px">Bellagio</span><span style="font-size:34px;color:#3FB477;font-weight:600">+$22/hr</span></div><div style="height:16px;background:#16223A;border-radius:8px;margin-top:8px"><div style="width:44%;height:16px;border-radius:8px;background:#3FB477"></div></div></div><div style="margin-bottom:24px"><div class="row"><span style="font-size:34px">Aria</span><span style="font-size:34px;color:#E2574C;font-weight:600">-$9/hr</span></div><div style="height:16px;background:#16223A;border-radius:8px;margin-top:8px"><div style="width:18%;height:16px;border-radius:8px;background:#E2574C"></div></div></div>
+     </div></div>
+</body></html>

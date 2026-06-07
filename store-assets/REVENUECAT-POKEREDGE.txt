@@ -1,0 +1,46 @@
+REVENUECAT SETUP - POKER EDGE (Monthly + Annual, annual discounted)
+===================================================================
+App: com.markcmo.pokeredge   Entitlement: pro   Offering: default
+
+Exact IDs to use (App Store auto-renewable subscriptions):
+  Monthly product : com.markcmo.pokeredge.pro.monthly
+  Annual product  : com.markcmo.pokeredge.pro.annual
+  Entitlement     : pro
+  Offering        : default (must be CURRENT)
+  Packages        : $rc_monthly  -> monthly product
+                    $rc_annual   -> annual product
+
+Suggested pricing (set in App Store Connect, adjustable):
+  Monthly  $9.99
+  Annual   $59.99   (works out to ~$5/mo, a 50% discount vs monthly)
+
+The Poker Edge app code reads packages generically from the CURRENT offering and
+gates on the "pro" entitlement, so as long as the IDs and package types above
+match, no app code changes are needed.
+
+-------------------------------------------------------------------
+TWO WAYS TO FINISH THIS
+-------------------------------------------------------------------
+A) Give Claude a RevenueCat v2 SECRET API key and Claude does it via API:
+   RevenueCat dashboard -> Project Settings -> API keys -> "Secret API keys"
+   -> New (V2) -> copy the key (starts with sk_). Paste it to Claude.
+   Claude will then, via the v2 REST API:
+     1. Create (or locate) the Poker Edge iOS app in the project.
+     2. Create the "pro" entitlement.
+     3. Create both products (monthly + annual) by store identifier.
+     4. Create the "default" offering with $rc_monthly and $rc_annual packages
+        and mark it current.
+     5. Read back the iOS public SDK key and write it into app.json
+        (extra.revenueCatIosKey), replacing REPLACE_WITH_REVENUECAT_IOS_KEY.
+
+B) Do it in the dashboard yourself (3 minutes), then paste Claude the public key:
+   - Product catalog -> Products: add the two product IDs above (Store: App Store).
+   - Product catalog -> Entitlements: create "pro", attach both products.
+   - Product catalog -> Offerings: create/use "default", add $rc_monthly and
+     $rc_annual packages mapped to the products, make it Current.
+   - Project Settings -> API keys -> copy the iOS "Public app-specific" key
+     (starts with appl_). Paste it to Claude to put in app.json.
+
+NOTE: the matching auto-renewable subscriptions must also exist in App Store
+Connect (created after the app record exists at first `eas submit`). RevenueCat
+will show "Could not check" on the products until Apple has them - that is normal.
