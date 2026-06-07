@@ -107,6 +107,7 @@ export default function RootLayout() {
           <Stack.Screen name="hand/new" options={{ title: 'Log hand', presentation: 'modal' }} />
           <Stack.Screen name="tournament/[id]" options={{ title: 'Tournament' }} />
           <Stack.Screen name="room/[id]" options={{ title: 'Room' }} />
+          <Stack.Screen name="room/add" options={{ title: 'Add a room', presentation: 'modal' }} />
           <Stack.Screen name="study/ranges" options={{ title: 'Range charts' }} />
           <Stack.Screen name="study/matrix" options={{ title: 'Player-type guide' }} />
           <Stack.Screen name="study/quiz" options={{ title: 'Trainer' }} />

@@ -30,6 +30,7 @@ import type { SessionComputed, GameType, SessionFormat } from '../../src/types';
 import { money, moneySigned, clock, duration, dayMonth, hourly } from '../../src/lib/format';
 import { useStore } from '../../src/store/useStore';
 import { SEED_ROOMS } from '../../src/data/seedRooms';
+import { listUserRooms } from '../../src/db/userRooms';
 import { scheduleBreakReminder, cancelBreakReminder } from '../../src/lib/notifications';
 
 const GAME_TYPES: GameType[] = ['NLHE', 'PLO', 'LHE', 'Stud', 'Mixed', 'Tournament', 'Other'];
@@ -41,6 +42,9 @@ export default function SessionsTab() {
   const [active, setActive] = useState<SessionComputed | null>(null);
   const [history, setHistory] = useState<SessionComputed[]>([]);
   const [now, setNow] = useState(Date.now());
+
+  // rooms available in the picker: curated seed + the user's own added rooms
+  const pickerRooms = [...SEED_ROOMS, ...listUserRooms()];
 
   // form state
   const [game, setGame] = useState<GameType>('NLHE');
@@ -71,7 +75,7 @@ export default function SessionsTab() {
 
   const onStart = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => {});
-    const room = SEED_ROOMS.find((r) => r.id === roomId);
+    const room = pickerRooms.find((r) => r.id === roomId);
     const id = startSession({
       gameType: game,
       format,
@@ -235,7 +239,7 @@ export default function SessionsTab() {
           <Text style={styles.fieldLabel}>Room</Text>
           <ChipRow>
             <Chip label="None" active={roomId === null} onPress={() => setRoomId(null)} />
-            {SEED_ROOMS.map((r) => (
+            {pickerRooms.map((r) => (
               <Chip key={r.id} label={r.name} active={roomId === r.id} onPress={() => setRoomId(r.id)} />
             ))}
           </ChipRow>

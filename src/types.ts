@@ -137,10 +137,24 @@ export interface RakeStructure {
   buyInCap: number | null; // table buy-in cap for lowest stake
 }
 
+export interface NearbyRoom {
+  id: string;
+  name: string;
+  casino: string;
+  city: string;
+  state: string;
+  country: string;
+  lat: number | null;
+  lng: number | null;
+  source: string;
+  distanceKm: number;
+}
+
 export interface Room {
   id: string;
   name: string;
   casino: string;
+  source?: string; // 'curated' | 'community' | 'user' | undefined
   city: string;
   state: string;
   country: string;

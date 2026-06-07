@@ -102,6 +102,26 @@ CREATE TABLE IF NOT EXISTS quiz_results (
   date INTEGER NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS user_rooms (
+  id TEXT PRIMARY KEY NOT NULL,
+  name TEXT NOT NULL,
+  casino TEXT NOT NULL DEFAULT '',
+  city TEXT NOT NULL DEFAULT '',
+  state TEXT NOT NULL DEFAULT '',
+  country TEXT NOT NULL DEFAULT 'USA',
+  region TEXT NOT NULL DEFAULT 'Community',
+  tableCount INTEGER NOT NULL DEFAULT 0,
+  stakesSpread TEXT NOT NULL DEFAULT '',
+  rake TEXT NOT NULL DEFAULT '{}',
+  compPerHour REAL NOT NULL DEFAULT 0,
+  loyalty TEXT NOT NULL DEFAULT '',
+  hoursOpen TEXT NOT NULL DEFAULT '24/7',
+  lat REAL,
+  lng REAL,
+  notes TEXT NOT NULL DEFAULT '',
+  createdAt INTEGER NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS study_drills (
   id TEXT PRIMARY KEY NOT NULL,
   drillRef TEXT NOT NULL,
@@ -176,6 +196,7 @@ export function wipeAllData(): void {
     DELETE FROM hand_notes;
     DELETE FROM quiz_results;
     DELETE FROM study_drills;
+    DELETE FROM user_rooms;
   `);
   _initialized = false;
   initDb();

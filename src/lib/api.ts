@@ -84,6 +84,36 @@ export function getTournaments(): Promise<Fetched<Tournament[]>> {
   return fetchWithFallback<Tournament[]>('/v1/tournaments', 'cache:tournaments', SEED_TOURNAMENTS);
 }
 
+/** Free global room discovery via the server's OpenStreetMap proxy (no key/cost). */
+export async function getNearbyRooms(
+  lat: number,
+  lng: number,
+  radiusM = 60000
+): Promise<import('../types').NearbyRoom[]> {
+  try {
+    const res = await fetch(`${API_BASE}/v1/rooms/nearby?lat=${lat}&lng=${lng}&radius=${radiusM}`);
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  } catch {
+    return [];
+  }
+}
+
+/** Submit a user-added room to the shared community directory (best-effort). */
+export async function submitRoom(room: Partial<import('../types').Room>): Promise<boolean> {
+  try {
+    const res = await fetch(`${API_BASE}/v1/rooms/submit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(room),
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
 export function sourceLabel(source: DataSource, lastFetched: number | null): string {
   if (source === 'live') return 'Live data';
   if (source === 'cache' && lastFetched) {

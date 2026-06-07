@@ -16,6 +16,7 @@ import {
 import { colors, fonts, spacing, type } from '../../src/theme';
 import { getRooms } from '../../src/lib/api';
 import type { Room } from '../../src/types';
+import { getUserRoom } from '../../src/db/userRooms';
 import { structuralEv, scoreBand } from '../../src/lib/profitability';
 import { listCompletedSessions } from '../../src/db/sessions';
 import { byRoom } from '../../src/lib/analytics';
@@ -28,8 +29,10 @@ export default function RoomDetail() {
 
   useFocusEffect(
     useCallback(() => {
+      // user-added rooms live on-device; check there first, then the API
+      const local = id ? getUserRoom(id) : null;
       getRooms().then((res) => {
-        const r = res.data.find((x) => x.id === id) ?? null;
+        const r = local ?? res.data.find((x) => x.id === id) ?? null;
         setRoom(r);
         if (r) {
           const mine = byRoom(listCompletedSessions()).find((a) => a.key === r.name);
