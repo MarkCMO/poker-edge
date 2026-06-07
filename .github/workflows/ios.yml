@@ -35,13 +35,9 @@ jobs:
           echo "${{ secrets.ASC_KEY_B64 }}" | base64 --decode > asc/AuthKey.p8
 
       - name: Build iOS (local, no EAS quota)
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: eas build --platform ios --profile production --local --non-interactive --output ./app.ipa
 
       - name: Submit to TestFlight
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: eas submit --platform ios --profile ci --path ./app.ipa --non-interactive
 
       - name: Upload IPA artifact
