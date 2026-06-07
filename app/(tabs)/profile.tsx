@@ -18,7 +18,8 @@ import {
 } from '../../src/components/ui';
 import { colors, fonts, spacing, type } from '../../src/theme';
 import { useStore } from '../../src/store/useStore';
-import { listAccounts, accountBalance, totalBankroll, addTxn, createAccount } from '../../src/db/bankroll';
+import { listAccounts, accountBalance, totalBankroll, addTxn, createAccount, bankrollSeries } from '../../src/db/bankroll';
+import { LineChart } from '../../src/components/charts';
 import type { TxnType } from '../../src/types';
 import { listCompletedSessions } from '../../src/db/sessions';
 import { listPlayers } from '../../src/db/players';
@@ -65,6 +66,8 @@ export default function ProfileTab() {
     setNewAcct('');
     refresh();
   };
+
+  const balanceSeries = bankrollSeries().map((p) => p.balance);
 
   // local editable mirrors for numeric settings
   const [stopLoss, setStopLoss] = useState(s.stopLoss != null ? String(s.stopLoss) : '');
@@ -172,6 +175,12 @@ export default function ProfileTab() {
             <Body>{money(accountBalance(a.id))}</Body>
           </Row>
         ))}
+        {balanceSeries.length >= 2 ? (
+          <View style={{ marginTop: spacing.sm }}>
+            <LineChart data={balanceSeries} positive={total >= 0} />
+            <Body dim>Bankroll over {balanceSeries.length} transactions.</Body>
+          </View>
+        ) : null}
       </Card>
 
       <Card>
