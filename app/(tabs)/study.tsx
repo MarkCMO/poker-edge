@@ -48,6 +48,25 @@ const TOOLS: Tool[] = [
     body: 'Win % by players to the flop, odds of being dealt AA/KK, and how many hands until a premium.',
   },
   {
+    href: '/study/potodds',
+    icon: 'cash',
+    title: 'Pot odds & outs',
+    body: 'Pot odds, outs-to-equity, and call EV. Know if you are priced in to continue.',
+  },
+  {
+    href: '/study/handstats',
+    icon: 'bar-chart',
+    title: 'My hand stats',
+    body: 'Your logged hands by class and position - pairs, premiums, and what actually wins for you.',
+  },
+  {
+    href: '/study/variance',
+    icon: 'trending-up',
+    title: 'Variance & risk of ruin',
+    body: 'Confidence intervals, downswing odds, and the bankroll you need to survive variance.',
+    pro: true,
+  },
+  {
     href: '/study/import',
     icon: 'cloud-upload',
     title: 'Import hands + find leaks',

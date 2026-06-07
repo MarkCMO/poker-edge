@@ -115,6 +115,9 @@ export default function RootLayout() {
           <Stack.Screen name="study/quiz" options={{ title: 'Trainer' }} />
           <Stack.Screen name="study/equity" options={{ title: 'Equity calculator' }} />
           <Stack.Screen name="study/odds" options={{ title: 'Odds & probabilities' }} />
+          <Stack.Screen name="study/potodds" options={{ title: 'Pot odds & outs' }} />
+          <Stack.Screen name="study/handstats" options={{ title: 'My hand stats' }} />
+          <Stack.Screen name="study/variance" options={{ title: 'Variance & risk of ruin' }} />
           <Stack.Screen name="study/import" options={{ title: 'Import hands' }} />
           <Stack.Screen name="study/drills" options={{ title: 'Drills' }} />
           <Stack.Screen name="study/icm" options={{ title: 'ICM calculator' }} />
