@@ -104,6 +104,7 @@ export default function RootLayout() {
           <Stack.Screen name="analytics" options={{ title: 'Analytics' }} />
           <Stack.Screen name="paywall" options={{ title: 'Poker Edge Pro', presentation: 'modal' }} />
           <Stack.Screen name="session/[id]" options={{ title: 'Session' }} />
+          <Stack.Screen name="session/edit" options={{ title: 'Edit session', presentation: 'modal' }} />
           <Stack.Screen name="villain/[id]" options={{ title: 'Player' }} />
           <Stack.Screen name="villain/new" options={{ title: 'Tag player', presentation: 'modal' }} />
           <Stack.Screen name="hand/new" options={{ title: 'Log hand', presentation: 'modal' }} />

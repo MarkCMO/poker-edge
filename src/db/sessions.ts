@@ -88,6 +88,53 @@ export function startSession(input: NewSessionInput): string {
   return id;
 }
 
+export interface CompletedSessionInput {
+  gameType: Session['gameType'];
+  format: Session['format'];
+  stakes: string;
+  roomId?: string | null;
+  roomNameCached?: string;
+  buyIn: number;
+  rebuysTotal?: number;
+  cashOut: number;
+  tips?: number;
+  startTime: number;
+  endTime: number;
+  moodEnd?: number | null;
+  notes?: string;
+  tags?: string[];
+}
+
+/** Add a past (already finished) session manually, for backfilling history. */
+export function addCompletedSession(input: CompletedSessionInput): string {
+  const db = getDb();
+  const id = makeId('sess-');
+  db.runSync(
+    `INSERT INTO sessions
+      (id, gameType, format, stakes, roomId, roomNameCached, tableNumber, seat,
+       buyIn, cashOut, rebuysTotal, tips, startTime, endTime, moodStart, moodEnd, notes, tags)
+     VALUES (?, ?, ?, ?, ?, ?, NULL, NULL, ?, ?, ?, ?, ?, ?, NULL, ?, ?, ?)`,
+    [
+      id,
+      input.gameType,
+      input.format,
+      input.stakes,
+      input.roomId ?? null,
+      input.roomNameCached ?? '',
+      input.buyIn,
+      input.cashOut,
+      input.rebuysTotal ?? 0,
+      input.tips ?? 0,
+      input.startTime,
+      input.endTime,
+      input.moodEnd ?? null,
+      input.notes ?? '',
+      JSON.stringify(input.tags ?? []),
+    ]
+  );
+  return id;
+}
+
 export function getSession(id: string): SessionComputed | null {
   const db = getDb();
   const row = db.getFirstSync<SessionRow>('SELECT * FROM sessions WHERE id = ?', [id]);
@@ -133,6 +180,7 @@ export function updateSession(id: string, patch: Partial<Session>): void {
   if (patch.cashOut !== undefined) set('cashOut', patch.cashOut);
   if (patch.rebuysTotal !== undefined) set('rebuysTotal', patch.rebuysTotal);
   if (patch.tips !== undefined) set('tips', patch.tips);
+  if (patch.startTime !== undefined) set('startTime', patch.startTime);
   if (patch.endTime !== undefined) set('endTime', patch.endTime);
   if (patch.moodStart !== undefined) set('moodStart', patch.moodStart);
   if (patch.moodEnd !== undefined) set('moodEnd', patch.moodEnd);

@@ -14,7 +14,7 @@ import {
 } from '../../src/components/ui';
 import { colors, fonts, spacing, type } from '../../src/theme';
 import { getSession, deleteSession } from '../../src/db/sessions';
-import { listHands, toggleReview } from '../../src/db/hands';
+import { listHands, toggleReview, deleteHand } from '../../src/db/hands';
 import type { SessionComputed, HandNote } from '../../src/types';
 import { money, moneySigned, duration, fullDate, hourly } from '../../src/lib/format';
 
@@ -80,6 +80,20 @@ export default function SessionDetail() {
         </Row>
       </Card>
 
+      <Row>
+        <Button
+          title="Edit session"
+          variant="ghost"
+          style={{ flex: 1 }}
+          onPress={() => router.push({ pathname: '/session/edit', params: { id: session.id } })}
+        />
+        <Button
+          title="Log hand"
+          style={{ flex: 1 }}
+          onPress={() => router.push({ pathname: '/hand/new', params: { sessionId: session.id } })}
+        />
+      </Row>
+
       <SectionTitle>Hands logged</SectionTitle>
       {hands.length === 0 ? (
         <Body dim>No hands logged for this session.</Body>
@@ -96,14 +110,35 @@ export default function SessionDetail() {
             </Row>
             {h.streetActions ? <Body dim>{h.streetActions}</Body> : null}
             {h.selfNote ? <Body>{h.selfNote}</Body> : null}
-            <Button
-              title={h.reviewFlag ? 'Unflag for review' : 'Flag for review'}
-              variant="ghost"
-              onPress={() => {
-                toggleReview(h.id, !h.reviewFlag);
-                setHands(listHands(id));
-              }}
-            />
+            <Row>
+              <Button
+                title={h.reviewFlag ? 'Unflag' : 'Flag for review'}
+                variant="ghost"
+                style={{ flex: 1 }}
+                onPress={() => {
+                  toggleReview(h.id, !h.reviewFlag);
+                  setHands(listHands(id));
+                }}
+              />
+              <Button
+                title="Delete"
+                variant="danger"
+                style={{ flex: 1 }}
+                onPress={() => {
+                  Alert.alert('Delete hand', 'Remove this logged hand?', [
+                    { text: 'Cancel', style: 'cancel' },
+                    {
+                      text: 'Delete',
+                      style: 'destructive',
+                      onPress: () => {
+                        deleteHand(h.id);
+                        setHands(listHands(id));
+                      },
+                    },
+                  ]);
+                }}
+              />
+            </Row>
           </Card>
         ))
       )}

@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { View, Text, StyleSheet, Switch, Linking, Share, Alert } from 'react-native';
+import { View, Text, StyleSheet, Switch, Linking, Share, Alert, Pressable } from 'react-native';
 import { useFocusEffect, useRouter } from 'expo-router';
 import {
   Screen,
@@ -18,7 +18,7 @@ import {
 } from '../../src/components/ui';
 import { colors, fonts, spacing, type } from '../../src/theme';
 import { useStore } from '../../src/store/useStore';
-import { listAccounts, accountBalance, totalBankroll, addTxn, createAccount, bankrollSeries } from '../../src/db/bankroll';
+import { listAccounts, accountBalance, totalBankroll, addTxn, createAccount, bankrollSeries, listTxns, deleteTxn } from '../../src/db/bankroll';
 import { LineChart } from '../../src/components/charts';
 import type { TxnType } from '../../src/types';
 import { listCompletedSessions } from '../../src/db/sessions';
@@ -26,7 +26,7 @@ import { listPlayers } from '../../src/db/players';
 import { listHands } from '../../src/db/hands';
 import { wipeAllData } from '../../src/db/database';
 import { SEED_ROOMS } from '../../src/data/seedRooms';
-import { money, moneySigned } from '../../src/lib/format';
+import { money, moneySigned, dayMonth } from '../../src/lib/format';
 import { restorePurchases } from '../../src/lib/purchases';
 import type { BankrollAccount, PlayerNote } from '../../src/types';
 
@@ -68,6 +68,14 @@ export default function ProfileTab() {
   };
 
   const balanceSeries = bankrollSeries().map((p) => p.balance);
+  const recentTxns = listTxns().slice(0, 15);
+
+  const removeTxn = (txnId: string) => {
+    Alert.alert('Delete entry', 'Remove this bankroll transaction?', [
+      { text: 'Cancel', style: 'cancel' },
+      { text: 'Delete', style: 'destructive', onPress: () => { deleteTxn(txnId); refresh(); } },
+    ]);
+  };
 
   // local editable mirrors for numeric settings
   const [stopLoss, setStopLoss] = useState(s.stopLoss != null ? String(s.stopLoss) : '');
@@ -223,6 +231,28 @@ export default function ProfileTab() {
         </Row>
         <Button title="Add account" variant="ghost" onPress={addAccount} />
       </Card>
+
+      {recentTxns.length > 0 ? (
+        <>
+          <SectionTitle>Recent transactions</SectionTitle>
+          <Card>
+            {recentTxns.map((t) => (
+              <Pressable key={t.id} onPress={() => removeTxn(t.id)}>
+                <Row style={{ justifyContent: 'space-between', marginBottom: 8 }}>
+                  <View style={{ flex: 1, marginRight: 8 }}>
+                    <Body>{t.type}{t.note ? ` - ${t.note}` : ''}</Body>
+                    <Body dim>{dayMonth(t.date)}</Body>
+                  </View>
+                  <Text style={{ color: t.amount >= 0 ? colors.win : colors.loss, fontFamily: fonts.bodySemi }}>
+                    {moneySigned(t.amount)}
+                  </Text>
+                </Row>
+              </Pressable>
+            ))}
+            <Body dim>Tap an entry to delete it.</Body>
+          </Card>
+        </>
+      ) : null}
 
       {/* Players */}
       <SectionTitle right={<Text style={styles.count}>{players.length}</Text>}>Players</SectionTitle>

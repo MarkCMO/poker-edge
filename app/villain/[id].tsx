@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Alert, Pressable } from 'react-native';
 import { useLocalSearchParams, useFocusEffect, useRouter } from 'expo-router';
 import {
   Screen,
@@ -42,6 +42,10 @@ export default function VillainDetail() {
   const [boardStr, setBoardStr] = useState('');
   const [tendency, setTendency] = useState('');
 
+  // editable core fields
+  const [editName, setEditName] = useState('');
+  const [editDesc, setEditDesc] = useState('');
+
   const refresh = useCallback(() => {
     if (!id) return;
     setPlayer(getPlayer(id));
@@ -49,6 +53,13 @@ export default function VillainDetail() {
   }, [id]);
 
   useFocusEffect(useCallback(() => refresh(), [refresh]));
+
+  useEffect(() => {
+    if (player) {
+      setEditName(player.displayName);
+      setEditDesc(player.physicalDesc);
+    }
+  }, [player?.id]);
 
   if (!player) {
     return (
@@ -130,6 +141,37 @@ export default function VillainDetail() {
         </Card>
       ) : null}
 
+      <SectionTitle>Edit details</SectionTitle>
+      <Card>
+        <Field label="Name / label" value={editName} onChangeText={setEditName} placeholder="Blue hat, seat 4" />
+        <Field label="Physical description" value={editDesc} onChangeText={setEditDesc} placeholder="60s, gold watch, drinks fast" />
+        <Text style={styles.label}>Want at table</Text>
+        <ChipRow>
+          {[1, 2, 3, 4, 5].map((n) => (
+            <Chip
+              key={n}
+              label={String(n)}
+              active={player.rating === n}
+              onPress={() => {
+                updatePlayer(player.id, { rating: n });
+                refresh();
+              }}
+            />
+          ))}
+        </ChipRow>
+        <Button
+          title="Save details"
+          variant="ghost"
+          onPress={() => {
+            updatePlayer(player.id, {
+              displayName: editName.trim() || player.displayName,
+              physicalDesc: editDesc.trim(),
+            });
+            refresh();
+          }}
+        />
+      </Card>
+
       <SectionTitle>Tendencies</SectionTitle>
       <Card>
         {player.tendencies.length === 0 ? (
@@ -137,10 +179,28 @@ export default function VillainDetail() {
         ) : (
           <Row style={{ flexWrap: 'wrap', gap: spacing.sm }}>
             {player.tendencies.map((t, i) => (
-              <Pill key={i} label={t} tone="warn" />
+              <Pressable
+                key={i}
+                onPress={() =>
+                  Alert.alert('Remove tendency', `Remove "${t}"?`, [
+                    { text: 'Cancel', style: 'cancel' },
+                    {
+                      text: 'Remove',
+                      style: 'destructive',
+                      onPress: () => {
+                        updatePlayer(player.id, { tendencies: player.tendencies.filter((_, idx) => idx !== i) });
+                        refresh();
+                      },
+                    },
+                  ])
+                }
+              >
+                <Pill label={`${t}  x`} tone="warn" />
+              </Pressable>
             ))}
           </Row>
         )}
+        <Body dim>Tap a tendency to remove it.</Body>
         <Field label="Add tendency" value={tendency} onChangeText={setTendency} placeholder="3bets light" />
         <Button title="Add tendency" variant="ghost" onPress={addTendency} />
       </Card>

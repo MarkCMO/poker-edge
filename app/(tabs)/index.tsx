@@ -253,6 +253,8 @@ export default function SessionsTab() {
         History
       </SectionTitle>
 
+      <Button title="+ Add a past session" variant="ghost" onPress={() => router.push('/session/edit')} />
+
       {history.length === 0 ? (
         <EmptyState
           title="No sessions yet"
