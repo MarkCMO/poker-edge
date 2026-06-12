@@ -98,11 +98,11 @@ export default function Paywall() {
       />
 
       <Row style={{ justifyContent: 'center', gap: spacing.lg }}>
-        <Pressable onPress={() => Linking.openURL('https://pokeredge.app/terms').catch(() => {})}>
-          <Text style={styles.legal}>Terms</Text>
+        <Pressable onPress={() => Linking.openURL('https://www.apple.com/legal/internet-services/itunes/dev/stdeula/').catch(() => {})}>
+          <Text style={styles.legal}>Terms of Use (EULA)</Text>
         </Pressable>
-        <Pressable onPress={() => Linking.openURL('https://pokeredge.app/privacy').catch(() => {})}>
-          <Text style={styles.legal}>Privacy</Text>
+        <Pressable onPress={() => Linking.openURL('https://pokeredge-web.marklgabriellijr.workers.dev/privacy').catch(() => {})}>
+          <Text style={styles.legal}>Privacy Policy</Text>
         </Pressable>
       </Row>
       <Body dim>
